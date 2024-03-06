@@ -3,6 +3,14 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
+-- Keymaps
+-- move lines up and down (littlebox)
+vim.keymap.set("n", "<A-j>", ":m .+1<cr>==")
+vim.keymap.set("n", "<A-k>", ":m .-2<cr>==")
+
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
+
 
 -- Additional Plugins
 lvim.plugins = {
@@ -14,6 +22,22 @@ lvim.plugins = {
     'wakatime/vim-wakatime',
     lazy = false
   },
+  {
+		"github/copilot.vim",
+		event = "VeryLazy",
+		config = function()
+			-- copilot assume mapped
+			vim.g.copilot_assume_mapped = true
+			vim.g.copilot_no_tab_map = true
+		end,
+	},
+	{
+		"hrsh7th/cmp-copilot",
+		config = function()
+			lvim.builtin.cmp.formatting.source_names["copilot"] = "( )"
+			table.insert(lvim.builtin.cmp.sources, 2, { name = "copilot" })
+		end,
+	},
   {
     'folke/trouble.nvim',
     keys = {
